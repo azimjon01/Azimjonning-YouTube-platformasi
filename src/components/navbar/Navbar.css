@@ -1,6 +1,7 @@
 @media (max-width: 900px) {
     .menu-icon {
-        display: none;
+        /* display: none; */
+        width: 20px;
     }
     .nav-right img {
         display: none;
