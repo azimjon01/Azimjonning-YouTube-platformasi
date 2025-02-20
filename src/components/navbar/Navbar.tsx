@@ -1,15 +1,15 @@
-import { Mic, Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import menu_icon from "../../assets/menu.png";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/Azimjonning-logosi-online.svg";
 import search_icon from "../../assets/search.png";
-import upload_icon from "../../assets/upload.png";
-import more_icon from "../../assets/more.png";
-import notification from "../../assets/notification.png";
-import profile_icon from "../../assets/jack.png";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
-import React, { useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
+import VoiceSearch from "../voice/VoiceSearch";
+import AccountMenu from "../account/AccountMenu";
+import SubscriptionsMenu from "../subscriptions/SubscriptionsMenu";
+import UploadMenu from "../stream/UploadMenu";
+import MoreOptions from "../moreOptions/MoreOptions";
 
 interface NavbarProps {
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,8 +27,11 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebar }) => {
           src={menu_icon}
           onClick={() => setSidebar((prev) => !prev)}
         />
-        <Link to="/">
-          <img className="logo w-[130px]" src={logo} />
+        <Link to="/" className="flex">
+          <img className="logo w-[30px]" src={logo} />
+          <h1 className="ml-2 text-black font-bold text-xl dark:text-white">
+            Videolar
+          </h1>
         </Link>
       </div>
       <div className="nav-middle flex-div">
@@ -40,29 +43,24 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebar }) => {
           />
           <img src={search_icon} className="w-[15px]" />
         </div>
-        <button className="flex flex-shrink-0 md:gap-2">
-          <Mic />
-        </button>
+        <VoiceSearch />
         <button
           onClick={toggleTheme}
-          className="p-2 rounded-md bg-gray-200 dark:bg-gray-800"
+          className="p-2 rounded-md hover:bg-gray-100 dark:bg-gray-800 ml-2"
         >
           {!isDark ? (
             <Sun className="w-6 h-6 text-yellow-500" />
           ) : (
-            <Moon className="w-6 h-6 text-white-900" />
+            <Moon className="w-6 h-6" />
           )}
         </button>
       </div>
       <div className="nav-right flex-div ">
-        <img src={upload_icon} alt="" className="w-[25px] mr-[25px]" />
-        <img src={more_icon} alt="" className="w-[25px] mr-[25px]" />
-        <img src={notification} alt="" className="w-[25px] mr-[25px]" />
-        <img
-          className="user-icon w-[35px] rounded-[50%] mr-[25px]"
-          src={profile_icon}
-          alt=""
-        />
+        <UploadMenu />
+        {/* <img src={more_icon} alt="" className="w-[25px] mr-[25px]" /> */}
+        <MoreOptions />
+        <SubscriptionsMenu />
+        <AccountMenu />
       </div>
     </nav>
   );
