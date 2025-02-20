@@ -1,6 +1,6 @@
 .sidebar {
     background: #fff;
-    min-width: 15%;
+    max-width: 15%;
     height: 100vh;
     position: fixed;
     top: 0;
@@ -29,6 +29,7 @@
 }
 @media (max-width: 900px) {
     .sidebar {
-        display: none;
+        min-width: 40px;
+        max-width: 900px;
     }
 }
