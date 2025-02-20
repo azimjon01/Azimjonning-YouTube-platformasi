@@ -14,3 +14,15 @@
         padding-right: 5%;
     }
 }
+/* Light Mode */
+.play-container {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 20px;
+}
+
+/* Dark Mode */
+.dark {
+    --bg-color: #111827;
+    --text-color: #ffffff;
+}

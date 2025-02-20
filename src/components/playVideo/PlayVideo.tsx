@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { API_KEY, value_converter } from "../../data";
 import moment from "moment";
 import { useParams } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
 interface VideoSnippet {
   title: string;
@@ -53,6 +54,7 @@ interface CommentItem {
 
 const PlayVideo: React.FC = () => {
   const { videoId } = useParams<{ videoId: string }>();
+  const { isDark } = useTheme();
 
   const [apiData, setApiData] = useState<VideoItem | null>(null);
   const [channelData, setChannelData] = useState<ChannelItem | null>(null);
@@ -87,7 +89,7 @@ const PlayVideo: React.FC = () => {
   }, [apiData]);
 
   return (
-    <div className="play-video">
+    <div className="play-video bg-white dark:bg-gray-900 text-black dark:text-white p-4 transition-colors duration-300">
       {/* <video src={video1} controls autoPlay muted></video> */}
       <iframe
         src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
@@ -96,78 +98,95 @@ const PlayVideo: React.FC = () => {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerPolicy="strict-origin-when-cross-origin"
         allowFullScreen
+        className="w-full h-96 rounded-lg shadow-md"
       ></iframe>
-      <h3>{apiData ? apiData.snippet.title : "Title Here"}</h3>
-      <div className="play-video-info">
+      <h3 className="text-xl font-bold mt-4 dark:text-gray-200">
+        {apiData ? apiData.snippet.title : "Title Here"}
+      </h3>
+      <div className="play-video-info flex justify-between items-center text-gray-700 dark:text-gray-400 mt-2">
         <p>
           {apiData ? value_converter(apiData.statistics.viewCount) : "16K"}{" "}
           Views &bull;{" "}
           {apiData ? moment(apiData.snippet.publishedAt).fromNow() : ""}
         </p>
-        <div>
-          <span>
-            <img src={like} alt="" />
+        <div className="flex space-x-4">
+          <button className="flex items-center space-x-1 px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded-md">
+            <img src={like} alt="" className="w-5 h-5" />
             {apiData ? value_converter(apiData.statistics.likeCount) : 155}
-          </span>
-          <span>
-            <img src={dislike} alt="" />2
-          </span>
-          <span>
-            <img src={share} alt="" />
+          </button>
+          <button className="flex items-center space-x-1 px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded-md">
+            <img src={dislike} alt="" className="w-5 h-5" />2
+          </button>
+          <button className="flex items-center space-x-1 px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded-md">
+            <img src={share} alt="" className="w-5 h-5" />
             Share
-          </span>
-          <span>
-            <img src={save} alt="" />
+          </button>
+          <button className="flex items-center space-x-1 px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded-md">
+            <img src={save} alt="" className="w-5 h-5" />
             Save
-          </span>
+          </button>
         </div>
       </div>
-      <hr />
-      <div className="publisher">
-        <img src={channelData?.snippet.thumbnails.default.url} alt="" />
+      <hr className="my-4 border-gray-300 dark:border-gray-700" />
+      <div className="publisher flex items-center space-x-4 bg-gray-100 dark:bg-gray-800 p-3 rounded-lg shadow-md">
+        <img
+          src={channelData?.snippet.thumbnails.default.url}
+          alt=""
+          className="w-12 h-12 rounded-full"
+        />
         <div>
-          <p>{apiData ? apiData.snippet.channelTitle : ""}</p>
-          <span>
+          <p className="font-semibold">
+            {apiData ? apiData.snippet.channelTitle : ""}
+          </p>
+          <span className="text-sm text-gray-600 dark:text-gray-400">
             {channelData
               ? value_converter(channelData.statistics.subscriberCount)
               : "1M"}{" "}
             Subscribers
           </span>
         </div>
-        <button>Subscribe</button>
+        <button className="ml-auto px-4 py-1 bg-red-500 text-white rounded-md">
+          Subscribe
+        </button>
       </div>
-      <div className="vid-description">
-        <p>
+      <div className="vid-description mt-4 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+        <p className="text-sm text-gray-700 dark:text-gray-400">
           {apiData
             ? apiData.snippet.description.slice(0, 250)
             : "Description Here"}
         </p>
-        <hr />
-        <h4>
+        <hr className="my-4 border-gray-300 dark:border-gray-700" />
+        <h4 className="text-lg font-semibold">
           {apiData ? value_converter(apiData.statistics.commentCount) : 102}{" "}
           Comments
         </h4>
         {commentData.map((item, index) => {
           return (
-            <div key={index} className="comment">
+            <div
+              key={index}
+              className="comment flex space-x-3 mt-3 p-3 bg-gray-200 dark:bg-gray-700 rounded-lg"
+            >
               <img
                 src={item.snippet.topLevelComment.snippet.authorProfileImageUrl}
                 alt=""
+                className="w-10 h-10 rounded-full"
               />
               <div>
-                <h3>
+                <h3 className="text-sm font-semibold">
                   {item.snippet.topLevelComment.snippet.authorDisplayName}{" "}
-                  <span>1 day ago</span>
+                  <span className="text-xs text-gray-500">1 day ago</span>
                 </h3>
-                <p>{item.snippet.topLevelComment.snippet.textDisplay}</p>
-                <div className="comment-action">
-                  <img src={like} alt="" />
+                <p className="text-sm text-gray-800 dark:text-gray-300">
+                  {item.snippet.topLevelComment.snippet.textDisplay}
+                </p>
+                <div className="comment-action flex items-center space-x-2 mt-1 text-gray-600 dark:text-gray-400">
+                  <img src={like} alt="" className="w-4 h-4" />
                   <span>
                     {value_converter(
                       item.snippet.topLevelComment.snippet.likeCount,
                     )}
                   </span>
-                  <img src={dislike} alt="" />
+                  <img src={dislike} alt="" className="w-4 h-4" />
                 </div>
               </div>
             </div>

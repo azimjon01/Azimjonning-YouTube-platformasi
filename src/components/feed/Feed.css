@@ -24,3 +24,11 @@
 .card p {
     font-size: 14px;
 }
+
+.dark .card {
+    background-color: #1f2937;
+    color: white;
+}
+.dark .feed {
+    background-color: #111827;
+}

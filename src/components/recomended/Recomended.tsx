@@ -2,6 +2,7 @@ import "./Recomended.css";
 import React, { useEffect, useState } from "react";
 import { API_KEY, value_converter } from "../../data";
 import { Link } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
 interface VideoItem {
   id: string;
@@ -24,6 +25,7 @@ interface RecomendedProps {
 
 const Recomended: React.FC<RecomendedProps> = ({ categoryId }) => {
   const [apiData, setApiData] = useState<VideoItem[]>([]);
+  const { isDark } = useTheme();
 
   const fetchData = async () => {
     const relatedVideo_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=45&regionCode=US&videoCategoryId=${categoryId}&key=${API_KEY}`;
@@ -37,7 +39,7 @@ const Recomended: React.FC<RecomendedProps> = ({ categoryId }) => {
   }, []);
 
   return (
-    <div className="recommended">
+    <div className={`recommended ${isDark ? "dark" : ""}`}>
       {apiData?.map((item, index) => {
         return (
           <Link

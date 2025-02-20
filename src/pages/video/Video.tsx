@@ -3,15 +3,16 @@ import PlayVideo from "../../components/playVideo/PlayVideo";
 import Recomended from "../../components/recomended/Recomended";
 import "./Video.css";
 import React from "react";
+import { useTheme } from "../../components/context/ThemeContext";
 
 const Video: React.FC = () => {
   const { categoryId } = useParams<{
     categoryId: string;
   }>();
-  console.log("categoryId", categoryId);
+  const { isDark } = useTheme();
 
   return (
-    <div className="play-container">
+    <div className={`play-container ${isDark ? "dark" : ""}`}>
       <PlayVideo />
       {categoryId && <Recomended categoryId={categoryId} />}
     </div>

@@ -22,3 +22,37 @@
         flex-basis: 100%;
     }
 }
+/* Light Mode */
+.recommended {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 10px;
+}
+
+.side-video-list {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.side-video-list:hover {
+    background-color: var(--hover-bg);
+}
+
+.vid-info h4 {
+    color: var(--text-color);
+}
+
+.vid-info p {
+    color: var(--subtext-color);
+}
+
+/* Dark Mode */
+.dark {
+    --bg-color: #111827;
+    --text-color: #ffffff;
+    --subtext-color: #aaaaaa;
+    --hover-bg: #303030;
+}
