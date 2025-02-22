@@ -21,8 +21,9 @@ const Sidebar: React.FC<SidebarProps> = ({
       className={`sidebar ${sidebar ? "" : "small-sidebar"} ${isDark ? "bg-gray-900 text-white border-gray-700" : "bg-white text-black border-gray-200"}`}
     >
       <div className="sortcut-links">
-        {MENU.map((item) => (
+        {MENU.map((item, index) => (
           <div
+            key={index}
             onClick={() => setCategory(item.categoryNumber)}
             className={`side-link flex items-center mb-5 w-fit flex-wrap cursor-pointer
               ${category === item.categoryNumber ? "active bg-gray-700 text-white" : "hover:bg-gray-200 dark:hover:bg-gray-800"}`}
@@ -38,8 +39,11 @@ const Sidebar: React.FC<SidebarProps> = ({
         <h3 className="text-[13px] my-5 mx-0 text-gray-500 dark:text-gray-400">
           Subscribed
         </h3>
-        {Channel.map((item) => (
-          <div className="side-link flex items-center mb-5 w-fit flex-wrap cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800">
+        {Channel.map((item, index) => (
+          <div
+            key={index}
+            className="side-link flex items-center mb-5 w-fit flex-wrap cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800"
+          >
             <img
               src={item.name}
               alt=""

@@ -1,7 +1,7 @@
 import "./Feed.css";
 import { Link } from "react-router-dom";
 import { API_KEY, value_converter } from "../../data";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import moment from "moment";
 import { VideoItem, FeedProps } from "../../types";
 import { useTheme } from "../context/ThemeContext";
@@ -9,18 +9,53 @@ import { useTheme } from "../context/ThemeContext";
 const Feed = ({ category }: FeedProps) => {
   const [data, setData] = useState<VideoItem[]>([]);
   const { isDark } = useTheme();
+  // videolarni yuklash
+  const [nextPageToken, setNextPageToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const observerRef = useRef<HTMLDivElement | null>(null);
 
-  const fetchData = async () => {
-    const videoList_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&chart=mostPopular&maxResults=50&regionCode=US&videoCategoryId=${category}&key=${API_KEY}`;
-    await fetch(videoList_url)
-      .then((response) => response.json())
-      .then((data) => setData(data.items));
-  };
+  const fetchData = useCallback(
+    async (pageToken = "") => {
+      if (loading) return;
+      setLoading(true);
+
+      const videoList_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&chart=mostPopular&maxResults=48&regionCode=US&videoCategoryId=${category}&key=${API_KEY}`;
+
+      try {
+        const response = await fetch(videoList_url);
+        const result = await response.json();
+        setData((prev) => [...prev, ...result.items]);
+        setNextPageToken(result.nextPageToken || null);
+      } catch (error) {
+        console.log("Xatolik yuz berdi", error);
+      }
+
+      setLoading(false);
+    },
+    [category],
+  );
 
   useEffect(() => {
+    setData([]);
+    setNextPageToken(null);
     fetchData();
-    //eslint-disable-next-line
-  }, [category]);
+  }, [category, fetchData]);
+
+  useEffect(() => {
+    if (!nextPageToken || loading) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          fetchData(nextPageToken);
+        }
+      },
+      { threshold: 1.0 },
+    );
+
+    if (observerRef.current) observer.observe(observerRef.current);
+
+    return () => observer.disconnect();
+  }, [nextPageToken, fetchData]);
 
   return (
     <div className="feed bg-gray-100 dark:bg-gray-900 p-4 transition-colors duration-300">
@@ -49,6 +84,9 @@ const Feed = ({ category }: FeedProps) => {
           </Link>
         );
       })}
+      <p></p>
+      {loading && <p className=" text-center text-gray-500">Loadding...</p>}
+      <div ref={observerRef} className="h-10"></div>
     </div>
   );
 };

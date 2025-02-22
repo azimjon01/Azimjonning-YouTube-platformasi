@@ -1,7 +1,6 @@
 import { Moon, Sun } from "lucide-react";
 import menu_icon from "../../assets/menu.png";
 import logo from "../../assets/Azimjonning-logosi-online.svg";
-import search_icon from "../../assets/search.png";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
@@ -10,6 +9,7 @@ import AccountMenu from "../account/AccountMenu";
 import SubscriptionsMenu from "../subscriptions/SubscriptionsMenu";
 import UploadMenu from "../stream/UploadMenu";
 import MoreOptions from "../moreOptions/MoreOptions";
+import Search from "../search/Search";
 
 interface NavbarProps {
   setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,14 +35,7 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebar }) => {
         </Link>
       </div>
       <div className="nav-middle flex-div">
-        <div className="search-box flex-div border border-[#ccc] mr-[15px] py-2 px-3 rounded-[25px]">
-          <input
-            type="text"
-            placeholder="Search"
-            className="w-[400px] border-0 outline-0 bg-transparent text-black dark:text-white "
-          />
-          <img src={search_icon} className="w-[15px]" />
-        </div>
+        <Search />
         <VoiceSearch />
         <button
           onClick={toggleTheme}
@@ -57,7 +50,6 @@ const Navbar: React.FC<NavbarProps> = ({ setSidebar }) => {
       </div>
       <div className="nav-right flex-div ">
         <UploadMenu />
-        {/* <img src={more_icon} alt="" className="w-[25px] mr-[25px]" /> */}
         <MoreOptions />
         <SubscriptionsMenu />
         <AccountMenu />

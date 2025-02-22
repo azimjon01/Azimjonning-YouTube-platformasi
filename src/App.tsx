@@ -4,6 +4,8 @@ import Home from "./pages/home/Home";
 import Video from "./pages/video/Video";
 import { useState } from "react";
 import { ThemeProvider } from "./components/context/ThemeContext";
+import SearchResults from "./components/searchResults/SearchResults";
+import PlayVideo from "./components/playVideo/PlayVideo";
 
 function App() {
   const [sidebar, setSidebar] = useState(true);
@@ -15,6 +17,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home sidebar={sidebar} />} />
           <Route path="/video/:categoryId/:videoId" element={<Video />} />
+          <Route path="/video/:videoId" element={<PlayVideo />} />
+          <Route path="/search" element={<SearchResults sidebar={sidebar} />} />
         </Routes>
       </div>
     </ThemeProvider>

@@ -1,24 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import upload_icon from "../../assets/upload.png";
 import { Video, Camera, PlusCircle, X } from "lucide-react";
 
 const UploadMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // ✅ Modal tashqarisiga bosilganda yopish
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        menuRef.current &&
+        buttonRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        !buttonRef.current.contains(event.target as Node) // ✅ Tugmani bosganda ishlamasligi uchun
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      setTimeout(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+      }, 0); // ✅ Kechiktirib qo‘shish
+    }
+
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen]);
 
   return (
     <div className="relative mr-3">
-      {/* Video Button */}
+      {/* ✅ Video yuklash tugmasi */}
       <button
-        onClick={() => setIsOpen(true)}
+        onClick={() => setIsOpen(!isOpen)}
         className="p-2 rounded-lg dark:bg-gray-800 hover:bg-gray-100 transition"
       >
-        <img src={upload_icon} alt="" className="w-[25px]" />
+        <img src={upload_icon} alt="Upload" className="w-[25px]" />
       </button>
 
-      {/* Modal Oyna */}
+      {/* ✅ Modal Oyna */}
       {isOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 w-80">
+          <div
+            ref={menuRef} // ✅ Modal referens
+            className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 w-80"
+            onClick={(e) => e.stopPropagation()} // ✅ Modal ichida bosganda yopilmasligi uchun
+          >
             <div className="flex justify-between items-center">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 Video Qo‘shish
