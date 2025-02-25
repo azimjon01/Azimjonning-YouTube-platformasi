@@ -1,0 +1,4 @@
+.input-search:focus + .button-search {
+    border: 1px solid #3b82f6;
+    border-left: 0;
+}

@@ -1,6 +1,5 @@
 .container {
     margin: auto;
-    /* background: #f9f9f9; */
     padding-left: 17%;
     padding-right: 2%;
     padding-top: 20px;
@@ -14,6 +13,5 @@
     .container {
         padding-left: 5%;
         padding-right: 5%;
-        margin-left: 30px;
     }
 }

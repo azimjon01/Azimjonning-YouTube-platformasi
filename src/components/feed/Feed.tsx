@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import moment from "moment";
 import { VideoItem, FeedProps } from "../../types";
 import { useTheme } from "../context/ThemeContext";
+import Loader from "../loader/Loader";
 
 const Feed = ({ category }: FeedProps) => {
   const [data, setData] = useState<VideoItem[]>([]);
@@ -58,34 +59,35 @@ const Feed = ({ category }: FeedProps) => {
   }, [nextPageToken, fetchData]);
 
   return (
-    <div className="feed bg-gray-100 dark:bg-gray-900 p-4 transition-colors duration-300">
-      {data.map((item, index) => {
-        return (
-          <Link
-            key={index}
-            to={`video/${item.snippet.categoryId}/${item.id}`}
-            className="card bg-white dark:bg-gray-800 text-black dark:text-white p-3 rounded-lg shadow-md transition-colors duration-300"
-          >
-            <img
-              src={item.snippet.thumbnails.medium.url}
-              alt=""
-              className="rounded-lg"
-            />
-            <h2 className="text-lg font-semibold dark:text-gray-200">
-              {item.snippet.title}
-            </h2>
-            <h3 className="text-sm text-gray-700 dark:text-gray-400">
-              {item.snippet.channelTitle}
-            </h3>
-            <p className="text-xs text-gray-600 dark:text-gray-400">
-              {value_converter(item.statistics.viewCount)} views &bull;
-              {moment(item.snippet.publishedAt).fromNow()}
-            </p>
-          </Link>
-        );
-      })}
-      <p></p>
-      {loading && <p className=" text-center text-gray-500">Loadding...</p>}
+    <div className="text-center bg-red-500 m-auto">
+      <div className="feed bg-gray-100 dark:bg-gray-900 m-auto p-4 transition-colors duration-300">
+        {data.map((item, index) => {
+          return (
+            <Link
+              key={index}
+              to={`video/${item.snippet.categoryId}/${item.id}`}
+              className="card bg-white dark:bg-gray-800 text-black dark:text-white p-3 rounded-lg shadow-md transition-colors duration-300"
+            >
+              <img
+                src={item.snippet.thumbnails.medium.url}
+                alt=""
+                className="rounded-lg"
+              />
+              <h2 className="text-lg font-semibold dark:text-gray-200">
+                {item.snippet.title}
+              </h2>
+              <h3 className="text-sm text-gray-700 dark:text-gray-400">
+                {item.snippet.channelTitle}
+              </h3>
+              <p className="text-xs text-gray-600 dark:text-gray-400">
+                {value_converter(item.statistics.viewCount)} views &bull;
+                {moment(item.snippet.publishedAt).fromNow()}
+              </p>
+            </Link>
+          );
+        })}
+      </div>
+      {loading && <Loader />}
       <div ref={observerRef} className="h-10"></div>
     </div>
   );

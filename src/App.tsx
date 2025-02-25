@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
-import Navbar from "./components/navbar/Navbar";
 import Home from "./pages/home/Home";
 import Video from "./pages/video/Video";
 import { useState } from "react";
 import { ThemeProvider } from "./components/context/ThemeContext";
 import SearchResults from "./components/searchResults/SearchResults";
 import PlayVideo from "./components/playVideo/PlayVideo";
+import Navbar from "./components/navbar/Navbar";
 
 function App() {
   const [sidebar, setSidebar] = useState(true);
