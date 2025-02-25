@@ -4,12 +4,10 @@ import { API_KEY, value_converter } from "../../data";
 import { useCallback, useEffect, useRef, useState } from "react";
 import moment from "moment";
 import { VideoItem, FeedProps } from "../../types";
-import { useTheme } from "../context/ThemeContext";
 import Loader from "../loader/Loader";
 
 const Feed = ({ category }: FeedProps) => {
   const [data, setData] = useState<VideoItem[]>([]);
-  const { isDark } = useTheme();
   const [nextPageToken, setNextPageToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const observerRef = useRef<HTMLDivElement | null>(null);
@@ -19,7 +17,7 @@ const Feed = ({ category }: FeedProps) => {
       if (loading) return;
       setLoading(true);
 
-      const videoList_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&chart=mostPopular&maxResults=48&regionCode=US&videoCategoryId=${category}&key=${API_KEY}`;
+      const videoList_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&chart=mostPopular&maxResults=48&regionCode=US&videoCategoryId=${String(category)}&pageToken=${pageToken}&key=${API_KEY}`;
 
       try {
         const response = await fetch(videoList_url);

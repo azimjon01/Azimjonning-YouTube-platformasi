@@ -24,7 +24,7 @@ const Home: React.FC<HomeProps> = ({ sidebar }) => {
       <div
         className={`container ${sidebar ? "" : "large-container"} bg-white dark:bg-gray-900 text-black dark:text-white p-4`}
       >
-        <Feed category={category} />
+        <Feed category={String(category)} />
       </div>
     </div>
   );

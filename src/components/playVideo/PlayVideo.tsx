@@ -7,7 +7,6 @@ import React, { useEffect, useState } from "react";
 import { API_KEY, value_converter } from "../../data";
 import moment from "moment";
 import { useParams } from "react-router-dom";
-import { useTheme } from "../context/ThemeContext";
 
 interface VideoSnippet {
   title: string;
@@ -54,14 +53,12 @@ interface CommentItem {
 
 const PlayVideo: React.FC = () => {
   const { videoId } = useParams<{ videoId: string }>();
-  const { isDark } = useTheme();
 
   const [apiData, setApiData] = useState<VideoItem | null>(null);
   const [channelData, setChannelData] = useState<ChannelItem | null>(null);
   const [commentData, setCommentData] = useState<CommentItem[]>([]);
 
   const fetchVideoData = async () => {
-    // const videoDetails_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${API_KEY}`;
     const videoDetails_url = `https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=${videoId}&key=${API_KEY}`;
     await fetch(videoDetails_url)
       .then((res) => res.json())
