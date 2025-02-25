@@ -7,7 +7,6 @@ const AccountMenu: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // Tashqariga bosilganda menyuni yopish
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -20,7 +19,6 @@ const AccountMenu: React.FC = () => {
 
   return (
     <div className="relative" ref={menuRef}>
-      {/* Profile Icon */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center   rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition"

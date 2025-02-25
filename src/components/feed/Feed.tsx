@@ -10,7 +10,6 @@ import Loader from "../loader/Loader";
 const Feed = ({ category }: FeedProps) => {
   const [data, setData] = useState<VideoItem[]>([]);
   const { isDark } = useTheme();
-  // videolarni yuklash
   const [nextPageToken, setNextPageToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const observerRef = useRef<HTMLDivElement | null>(null);

@@ -12,7 +12,6 @@ const Search: React.FC = () => {
     e.preventDefault();
     if (!query.trim()) return;
 
-    // YouTube qidiruv natijalariga yo'naltirish
     navigate(`/search?q=${encodeURIComponent(query)}`);
   };
 

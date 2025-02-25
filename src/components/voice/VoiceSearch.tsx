@@ -6,7 +6,6 @@ const VoiceSearch = () => {
 
   const startListening = () => {
     setIsListening(true);
-    // Simulating voice recognition
     setTimeout(() => {
       setIsListening(false);
     }, 5000);

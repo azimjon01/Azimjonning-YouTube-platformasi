@@ -8,7 +8,6 @@ const UploadMenu: React.FC = () => {
 
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // ✅ Modal tashqarisiga bosilganda yopish
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -24,7 +23,7 @@ const UploadMenu: React.FC = () => {
     if (isOpen) {
       setTimeout(() => {
         document.addEventListener("mousedown", handleClickOutside);
-      }, 0); // ✅ Kechiktirib qo‘shish
+      }, 0);
     }
 
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -32,7 +31,6 @@ const UploadMenu: React.FC = () => {
 
   return (
     <div className="relative mr-3">
-      {/* ✅ Video yuklash tugmasi */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="p-2 rounded-lg dark:bg-gray-800 hover:bg-gray-100 transition"
